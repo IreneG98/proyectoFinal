@@ -24,32 +24,42 @@ export const LoginPage = () => {
 
   return (
     <section>
-      <h1>Logearse</h1>
-      <form onSubmit={handleForm}>
-        <fieldset>
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            required
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </fieldset>
-        <fieldset>
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            required
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </fieldset>
-
-        <button>Login</button>
-        {error ? <p>{error}</p> : null}
-      </form>
+      <div className="bold-line"></div>
+      <div className="container">
+        <div className="window">
+          <div className="overlay"></div>
+          <div className="content">
+            <div className="welcome">Iniciar sesión</div>
+            <form onSubmit={handleForm}>
+              <div className="input-fields">
+                <label htmlFor="email"></label>
+                <input
+                  placeholder="Email"
+                  className="input-line full-width"
+                  type="email"
+                  id="email"
+                  name="email"
+                  required
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                <label htmlFor="password"></label>
+                <input
+                  placeholder="Contraseña"
+                  className="input-line full-width"
+                  type="password"
+                  id="password"
+                  name="password"
+                  required
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <button className="ghost-round full-width">Login</button>
+                {error ? <p>{error}</p> : null}
+              </div>
+            </form>
+            <div className="missyou">Te hemos echado de menos...</div>
+          </div>
+        </div>
+      </div>
     </section>
   );
 };

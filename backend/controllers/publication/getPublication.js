@@ -1,22 +1,32 @@
 const getDB = require('../../db/getDB');
 const { generateError } = require('../../helpers');
+const jwt = require('jsonwebtoken');
 
 const getPublication = async (req, res, next) => {
     let connection;
 
     try {
         connection = await getDB();
+        const { authorization } = req.headers;
 
+        let tokenInfo;
+
+        if (authorization) {
+            // Desencriptamos el token
+            tokenInfo = jwt.verify(authorization, process.env.SECRET);
+        }
         const { idPublication } = req.params;
 
         const [publications] = await connection.query(
             `SELECT p.*,
-            COUNT(u.id) as likes
+            COUNT(u.id) as likes, if(max(u2.idUser), true, false) as loggedUserLiked
             FROM publication p
             left JOIN user_like_publication u
             ON p.id = u.idPublication
+            left JOIN user_like_publication u2
+            ON (p.id = u2.idPublication and u2.idUser = ?)
             WHERE p.id = ?;`,
-            [idPublication]
+            [tokenInfo?.id, idPublication]
         );
 
         const [photos] = await connection.query(

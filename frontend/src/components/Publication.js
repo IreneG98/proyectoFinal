@@ -1,11 +1,9 @@
 import { useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
-import { deletePublicationService } from '../services';
 
 export const Publication = ({
   publication,
-  removePublication,
   likePublication,
   unlikePublication
 }) => {
@@ -13,28 +11,25 @@ export const Publication = ({
   const { user, token } = useContext(AuthContext);
   const [error, setError] = useState('');
 
-  const deletePublication = async (id) => {
-    try {
-      await deletePublicationService({ id, token });
-      if (removePublication) {
-        removePublication(id);
-      } else {
-        navigate('/publications');
-      }
-    } catch (error) {
-      setError(error.message);
-    }
-  };
-
   return (
     <article>
-      <p>{publication.title}</p>
-      <p>{publication.category}</p>
-      <p>{publication.place}</p>
-      <p>{publication.description}</p>
+      <p>
+        <Link to={`/publications/${publication.id}`} className="welcome">
+          {publication.title}
+        </Link>
+      </p>
+      <p className="input-line full-width">Categoría: {publication.category}</p>
+      <p className="input-line full-width">Lugar: {publication.place}</p>
+      <p className="input-line full-width">
+        Descripción: {publication.description}
+      </p>
+      {publication.text && (
+        <p className="input-line full-width">{publication.text}</p>
+      )}
       {publication.photos.length
         ? publication.photos.map((photo) => (
             <img
+              className="photo"
               key={photo.id}
               src={`${process.env.REACT_APP_BACKEND}/static/publication/${photo.name}`}
               alt={publication.place}
@@ -42,10 +37,10 @@ export const Publication = ({
           ))
         : null}
 
-      <p>{publication.likes} </p>
       {token && (
         <button
-          className={!publication.loggedUserLiked ? '' : 'liked'}
+          id="heart"
+          className={!publication.loggedUserLiked ? 'like' : 'liked'}
           onClick={async () => {
             const res = await fetch(
               `${process.env.REACT_APP_BACKEND}/publications/${publication.id}/like`,
@@ -64,26 +59,9 @@ export const Publication = ({
               }
             }
           }}
-        >
-          Like
-        </button>
+        ></button>
       )}
-
-      <p>
-        {user && user.id === publication.user_id ? (
-          <section>
-            <button
-              onClick={() => {
-                if (window.confirm('Are you sure?'))
-                  deletePublication(publication.id);
-              }}
-            >
-              Delete publication
-            </button>
-            {error ? <p>{error}</p> : null}
-          </section>
-        ) : null}
-      </p>
+      {token && <p id="nheart">{publication.likes} </p>}
     </article>
   );
 };

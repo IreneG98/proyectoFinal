@@ -4,14 +4,16 @@ import { SearchBar } from './SearchBar';
 
 export const Header = () => {
   return (
-    <header>
-      <h1>
-        <Link to="/publications">Viajes Recomendados</Link>
+    <header className="flex-container">
+      <h1 className="flex-items">
+        <Link to="/publications" className="title">
+          Viajes Recomendados
+        </Link>
       </h1>
-      <nav>
+      <nav className="flex-items">
         <Auth />
       </nav>
-      <nav>
+      <nav className="flex-items">
         <SearchBar />
       </nav>
     </header>

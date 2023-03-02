@@ -29,7 +29,7 @@ const listPublications = async (req, res, next) => {
 
         if (search) {
             [publications] = await connection.query(
-                `SELECT p.*,
+                `SELECT p.id, p.title, p.category, p.place, p.description, p.idUser,
                 count(u.id) as likes, if(max(u2.idUser), true, false) as loggedUserLiked
                             FROM publication p
                             left JOIN user_like_publication u
@@ -43,7 +43,7 @@ const listPublications = async (req, res, next) => {
             );
         } else {
             [publications] = await connection.query(
-                `SELECT p.*,
+                `SELECT p.id, p.title, p.category, p.place, p.description, p.idUser,
                 count(u.id) as likes, if(max(u2.idUser), true, false) as loggedUserLiked
                             FROM publication p
                             left JOIN user_like_publication u

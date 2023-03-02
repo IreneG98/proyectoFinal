@@ -1,15 +1,31 @@
 import { useState } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 
 export const SearchBar = () => {
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [search, setSearch] = useState(searchParams.get('search') || '');
+  const navigate = useNavigate();
+  const location = useLocation();
 
   return (
-    <form>
-      <fieldset>
-        <label htmlFor="search">Barra de busqueda</label>
+    <div className="box">
+      <form
+        name="search"
+        onSubmit={(e) => {
+          e.preventDefault();
+          if (location.pathname !== '/search') {
+            navigate(`/search?search=${search}`);
+          } else {
+            setSearchParams(new URLSearchParams({ search }));
+          }
+        }}
+      >
+        <label htmlFor="search" id="buscar">
+          buscar:
+        </label>
         <input
+          placeholder="¿Qué deseas encontrar?"
+          className="input"
           type="text"
           id="search"
           name="search"
@@ -18,8 +34,8 @@ export const SearchBar = () => {
             setSearch(e.target.value);
           }}
         />
-      </fieldset>
-      <Link to={`/search?search=${search}`}>Buscar</Link>
-    </form>
+      </form>
+      <i className="fas fa-search"></i>
+    </div>
   );
 };

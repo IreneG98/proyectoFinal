@@ -17,9 +17,12 @@ export const getAllPublicationsService = async (token) => {
   return json.publications;
 };
 
-export const getSinglePublicationService = async (id) => {
+export const getSinglePublicationService = async (id, token) => {
   const response = await fetch(
-    `${process.env.REACT_APP_BACKEND}/publications/${id}`
+    `${process.env.REACT_APP_BACKEND}/publications/${id}`,
+    {
+      headers: { Authorization: token }
+    }
   );
   const json = await response.json();
   if (!response.ok) {
@@ -114,9 +117,14 @@ export const deletePublicationService = async ({ id, token }) => {
   }
 };
 
-export const searchResultsService = async ({ search }) => {
+export const searchResultsService = async ({ search, token }) => {
   const response = await fetch(
-    `${process.env.REACT_APP_BACKEND}/publications?${search}`
+    `${process.env.REACT_APP_BACKEND}/publications?${search}`,
+    {
+      headers: {
+        Authorization: token
+      }
+    }
   );
 
   const json = await response.json();

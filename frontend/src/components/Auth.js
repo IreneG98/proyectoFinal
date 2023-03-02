@@ -6,17 +6,23 @@ export const Auth = () => {
   const { user, logout } = useContext(AuthContext);
 
   return user ? (
-    <p>
-      Logged in as {user.email}
-      <button onClick={logout}>LogOut</button>
+    <p className="useremail">
+      {user.email}
+      <button className="closesesion" onClick={logout}>
+        Cerrar sesión
+      </button>
     </p>
   ) : (
-    <ul>
+    <ul className="nav">
       <li>
-        <Link to="/register">Register</Link>
+        <Link to="/register" className="navText">
+          Register
+        </Link>
       </li>
       <li>
-        <Link to="/login">Login</Link>
+        <Link to="/login" className="navText">
+          Login
+        </Link>
       </li>
     </ul>
   );

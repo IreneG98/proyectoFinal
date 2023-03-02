@@ -5,21 +5,28 @@ import usePublication from '../hooks/usePublication';
 
 export const PublicationPage = () => {
   const { id } = useParams();
-  const { publication, loading, error } = usePublication(id);
+  const { publication, loading, error, likePublication, unlikePublication } =
+    usePublication(id);
 
-  if (loading) return <p>cargando publicacion...</p>;
+  if (loading) return <p></p>;
   if (error) return <ErrorMessage message={error} />;
 
   return (
     <section>
-      <h1>Publicacion</h1>
-      <Publication publication={publication} />
-      <p>{publication.text}</p>
-      {publication.comments.length
-        ? publication.comments.map((commenty) => (
-            <p key={commenty.idUser}>{commenty.comment}</p>
-          ))
-        : null}
+      <div className="bold-line"></div>
+      <div className="container">
+        <div className="window3">
+          <div className="overlay3"></div>
+          <div className="content">
+            <div className="input-fields"></div>
+            <Publication
+              publication={publication}
+              likePublication={likePublication}
+              unlikePublication={unlikePublication}
+            />
+          </div>
+        </div>
+      </div>
     </section>
   );
 };

@@ -1,26 +1,25 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 import { searchResultsService } from '../services';
 
 const usePublications = () => {
   const [publications, setPublications] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [searchParams] = useSearchParams();
+
+  const { token } = useContext(AuthContext);
+
   useEffect(() => {
     const loadPublications = async () => {
       try {
-        setLoading(true);
-
         const data = await searchResultsService({
-          search: searchParams.toString()
+          search: searchParams.toString(),
+          token
         });
-
         setPublications(data);
       } catch (error) {
         setError(error.message);
-      } finally {
-        setLoading(false);
       }
     };
 
@@ -37,7 +36,32 @@ const usePublications = () => {
     );
   };
 
-  return { publications, loading, error, addPublication, removePublication };
+  const likePublication = (id) => {
+    const publicationIndex = publications.findIndex(
+      (publication) => publication.id === id
+    );
+    publications[publicationIndex].likes++;
+    publications[publicationIndex].loggedUserLiked = true;
+    setPublications([...publications]);
+  };
+
+  const unlikePublication = (id) => {
+    const publicationIndex = publications.findIndex(
+      (publication) => publication.id === id
+    );
+    publications[publicationIndex].likes--;
+    publications[publicationIndex].loggedUserLiked = false;
+    setPublications([...publications]);
+  };
+
+  return {
+    publications,
+    error,
+    addPublication,
+    removePublication,
+    likePublication,
+    unlikePublication
+  };
 };
 
 export default usePublications;

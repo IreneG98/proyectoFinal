@@ -43,55 +43,129 @@ export const NewPublication = ({ addPublication }) => {
   };
 
   return (
-    <form onSubmit={handleForm}>
-      <h1>Add new publication</h1>
-      <fieldset>
-        <label htmlFor="title">Titulo</label>
-        <input type="text" id="title" name="title" required />
-      </fieldset>
-      <fieldset>
-        <legend>Categoria</legend>
-        <label htmlFor="nieve">Nieve</label>
-        <input type="radio" id="nieve" name="category" value="nieve" />
-        <label htmlFor="playa">Playa</label>
-        <input type="radio" id="playa" name="category" value="playa" />
-        <label htmlFor="ciudad">Ciudad</label>
-        <input type="radio" id="ciudad" name="category" value="ciudad" />
-        <label htmlFor="montaña">Montaña</label>
-        <input type="radio" id="montaña" name="category" value="montaña" />
-        <label htmlFor="crucero">Crucero</label>
-        <input type="radio" id="crucero" name="category" value="crucero" />
-        <label htmlFor="interrail">Interrail</label>
-        <input type="radio" id="interrail" name="category" value="interrail" />
-        <label htmlFor="senderismo">Senderismo</label>
-        <input
-          type="radio"
-          id="senderismo"
-          name="category"
-          value="senderismo"
-        />
-        <label htmlFor="relax">Relax</label>
-        <input type="radio" id="relax" name="category" value="relax" />
-      </fieldset>
-      <fieldset>
-        <label htmlFor="place">Lugar</label>
-        <input type="text" id="place" name="place" required />
-      </fieldset>
-      <fieldset>
-        <label htmlFor="description">Descripcion</label>
-        <input type="text" id="description" name="description" required />
-      </fieldset>
-      <fieldset>
-        <label htmlFor="text">Text</label>
-        <input type="text" id="text" name="text" required />
-      </fieldset>
-      <fieldset>
-        <label htmlFor="image">Imagenes (optional)</label>
-        <input type="file" id="image" multiple ref={photosInputRef} />
-      </fieldset>
-      <button>Send publication</button>
-      {sending ? <p>Sending publication</p> : null}
-      {error ? <p>{error}</p> : null}
-    </form>
+    <section>
+      <div className="bold-line"></div>
+      <div className="container">
+        <div className="window2">
+          <div className="overlay2"></div>
+          <div className="content">
+            <div className="welcome">Nueva publicación</div>
+            <form onSubmit={handleForm}>
+              <div className="input-fields">
+                <label htmlFor="title"></label>
+                <input
+                  placeholder="Título"
+                  className="input-line full-width"
+                  type="text"
+                  id="title"
+                  name="title"
+                  required
+                />
+                <legend className="category">Categoría:</legend>
+                <label className="radio" htmlFor="nieve">
+                  Nieve
+                </label>
+                <input type="radio" id="nieve" name="category" value="nieve" />
+                <label className="radio" htmlFor="playa">
+                  Playa
+                </label>
+                <input type="radio" id="playa" name="category" value="playa" />
+                <label className="radio" htmlFor="ciudad">
+                  Ciudad
+                </label>
+                <input
+                  type="radio"
+                  id="ciudad"
+                  name="category"
+                  value="ciudad"
+                />
+                <label className="radio" htmlFor="montaña">
+                  Montaña
+                </label>
+                <input
+                  type="radio"
+                  id="montaña"
+                  name="category"
+                  value="montaña"
+                />
+                <label className="radio" htmlFor="crucero">
+                  Crucero
+                </label>
+                <input
+                  type="radio"
+                  id="crucero"
+                  name="category"
+                  value="crucero"
+                />
+                <label className="radio" htmlFor="interrail">
+                  Interrail
+                </label>
+                <input
+                  type="radio"
+                  id="interrail"
+                  name="category"
+                  value="interrail"
+                />
+                <label className="radio" htmlFor="senderismo">
+                  Senderismo
+                </label>
+                <input
+                  type="radio"
+                  id="senderismo"
+                  name="category"
+                  value="senderismo"
+                />
+                <label className="radio" htmlFor="relax">
+                  Relax
+                </label>
+                <input type="radio" id="relax" name="category" value="relax" />
+                <label htmlFor="place"></label>
+                <input
+                  placeholder="Lugar"
+                  className="input-line full-width"
+                  type="text"
+                  id="place"
+                  name="place"
+                  required
+                />
+                <label htmlFor="description"></label>
+                <input
+                  placeholder="Descripción"
+                  className="input-line full-width"
+                  type="text"
+                  id="description"
+                  name="description"
+                  required
+                />
+                <label htmlFor="text"></label>
+                <input
+                  placeholder="Texto"
+                  className="input-line full-width"
+                  type="text"
+                  id="text"
+                  name="text"
+                  required
+                />
+                <label htmlFor="image" id="photo">
+                  Fotos
+                </label>
+                <input
+                  style={{ display: 'none' }}
+                  placeholder="Imagen (optional)"
+                  className="input-line full-width"
+                  type="file"
+                  id="image"
+                  multiple
+                  ref={photosInputRef}
+                />
+                <button className="buttonpublication">Publicar</button>
+                {sending ? <p>Sending publication</p> : null}
+                {error ? <p>{error}</p> : null}
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 };

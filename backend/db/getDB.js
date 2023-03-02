@@ -2,9 +2,8 @@ const mysql = require('mysql2/promise');
 require('dotenv').config();
 
 const { MYSQL_HOST, MYSQL_USER, MYSQL_PASS, MYSQL_DB } = process.env;
-
+let pool;
 const getDB = async () => {
-    let pool;
     try {
         if (!pool) {
             pool = mysql.createPool({
@@ -15,9 +14,8 @@ const getDB = async () => {
                 database: MYSQL_DB,
                 timezone: 'Z',
             });
-
-            return await pool.getConnection();
         }
+        return await pool.getConnection();
     } catch (error) {
         console.error(error.message);
     }
